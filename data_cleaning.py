@@ -1,6 +1,9 @@
-# data cleaning to go into databse
+# Author: Bella Picasso-Kennedy 
+# Date: May 03, 2026
+# Purpose: Defines the DataCleaning class, which processes raw CSV data and inserts
+#          validated records into the PostgreSQL database.
 
-import pandas as pd
+import pandas as pd # for data manipulation
 from database import Database 
 
 class DataCleaning:
@@ -9,6 +12,7 @@ class DataCleaning:
         self.db = db
         self.movies = pd.read_csv(csv_file)
         
+        # rename raw csv column headers to the names expected by the database schema (id -> movieID)
         self.movies = self.movies.rename(columns={
             'id': 'movieID',
             'title': 'title',
@@ -20,7 +24,7 @@ class DataCleaning:
             'vote_count': 'voteCount'
         })
         
-        # columns that will be in use 
+        # drops all columns that won't be used in the database
         self.movies = self.movies[['movieID', 'title', 'originalTitle', 'overview', 'runtime', 'releaseDate', 'voteAverage', 'voteCount']]
         
         # no description put n/a
@@ -46,6 +50,7 @@ class DataCleaning:
     def insertMovie(self):
         for _, row in self.movies.iterrows():
             # referenced: https://www.postgresql.org/docs/current/sql-insert.html for on conlfict do nothing
+            # on conflict do nothing does not allow a row with the same primary key to be added to the database
             self.db.executeUpdate(
                 """
                 INSERT INTO movie(movieID, title, originalTitle, overview, runtime, releaseDate, voteAverage, voteCount)

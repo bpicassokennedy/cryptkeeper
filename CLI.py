@@ -1,5 +1,8 @@
-# author: bella picasso-kennedy
-# purpose: cs457 final project
+# Author: Bella Picasso-Kennedy
+# Date: May 03, 2026 
+# Purpose: Defines the CLI class, which provides a command-line interface for users to interact 
+#          with the horror movie database, including searching, logging, and managing personal
+#          movie activity.
 
 from colorama import * # used for text color in terminal https://pypi.org/project/colorama/ 
 from user import User 
@@ -13,8 +16,10 @@ from datetime import date # used for movie rating
 class CLI:
     def __init__(self, db):
         self.db = db 
-        self.currentUser = None
+        # used to track who is logged in
+        self.currentUser = None 
     
+    # application entry point
     def startMenu(self):
         while True:
             print()
@@ -38,14 +43,18 @@ class CLI:
             else:
                 print()
                 print(Fore.WHITE + Style.DIM + "Invalid choice, try again!" + Style.RESET_ALL)
-                
+                    
     def login(self):
         print(Style.RESET_ALL)
         username = input(Fore.WHITE + Style.DIM + 'Username: ') 
         password = input("Password: ")
         user = User(self.db)
+        
+        # handles credential validation against the db
         if user.login(username, password):
+            # store authenticated username
             self.currentUser = username
+            # store user object itself
             self.user = user
             self.mainMenu()
     
@@ -58,7 +67,8 @@ class CLI:
             self.currentUser = username
             self.user = user
             self.mainMenu()
-            
+       
+    # main menu after user logs in or completes registration       
     def mainMenu(self):
         while True: 
             print()
@@ -83,7 +93,8 @@ class CLI:
             else:
                 print()
                 print(Fore.WHITE + Style.DIM + "Invalid choice, try again!" + Style.RESET_ALL)
-                
+    
+    # show signed in users profile            
     def showProfile(self):
         self.user.viewProfile()
         print(Style.RESET_ALL + '1. View Watchlist')
@@ -110,7 +121,10 @@ class CLI:
             print()
             print(Fore.WHITE + Style.DIM + "Invalid choice, try again!" + Style.RESET_ALL)
     
+    # show movie details and allow users to choose how they want to interact with the movie
     def movieDetails(self, row):
+        # row indices: 0=movieID, 1=title, 2=originalTitle, 3=overview, 
+        #              4=runtime, 5=releaseDate, 6=voteAverage, 7=voteCount
         print()
         print(Fore.RED + '=== Movie Details ===' + Style.RESET_ALL)
         print(f"Title: {row[1]}")
@@ -181,15 +195,18 @@ class CLI:
             print()
             print(Fore.WHITE + Style.DIM + 'Invalid choice, try again!' + Style.RESET_ALL)
     
-    
     def searchResults(self):
+        # keep this running until the user decides to navigate back
         while True:
             print()
             title = input("Enter a movie title: ")
             
+            # instantiate a movie object 
             movie = Movie(self.db)
+            # call search method to find movies with matching titles
             results = movie.search(self.db, title)
             
+            # query returned nothing
             if not results:
                 print()
                 print(Fore.WHITE + Style.DIM + "No movies found, try again" + Style.RESET_ALL)
@@ -211,21 +228,25 @@ class CLI:
             
                 if choice.upper() == 'B':
                     return
-                if choice == '0':
+                elif choice == '0':
                     break
-            
+                
                 try: 
+                    # convert user's input to int and subtract 1 to get correct index
                     index = int(choice) - 1
+                    # index falls within valid range
                     if 0 <= index < len(results):
                         self.movieDetails(results[index])
+                    # index is out of range
                     else:
                         print()
                         print(Fore.WHITE + Style.DIM + "Invalid choice, try again!" + Style.RESET_ALL)
+                # handles input that cannot be converted to an int 
                 except ValueError:
                     print("Invalid choice, try again!")
        
-        
     def showWatchList(self):
+        # find all movies on the current user's watchlist
         results = self.db.executeQuery(
             """
             SELECT m.movieID, m.title, m.releaseDate
@@ -245,6 +266,7 @@ class CLI:
         print()
         print(Fore.RED + '==== Watchlist ====' + Style.RESET_ALL)
         for i, row in enumerate(results, 1):
+            # print movie along with release date (for movies w/ the same title)
             print(f"{i}. {row[1]} ({row[2].year})")
 
         self.selectMovie(results)
@@ -270,6 +292,7 @@ class CLI:
         print()
         print(Fore.RED + '=== Watched Log ===' + Style.RESET_ALL)
         for i, row in enumerate(results, 1):
+            # movie title, with date watched (yyyy-mm-dd format)
             print(f"{i}. {row[1]} (Watched: {row[2]})")
         
         self.selectMovie(results)
@@ -294,6 +317,7 @@ class CLI:
         
         print()
         print(Fore.RED + '===== Reviews =====' + Style.RESET_ALL)
+        # display movie title, review written, and date written
         for i, row in enumerate(results, 1):
             print(f"{i}. {row[1]}")
             print(f"Review: {row[2]}")
@@ -321,6 +345,7 @@ class CLI:
         
         print(Fore.RED + '===== Ratings =====' + Style.RESET_ALL) 
         for i, row in enumerate(results, 1):
+            # show movie title, and rating of movie out of ten
             print(f"{i}. {row[1]} - {row[2]}/10")
         
         self.selectMovie(results)
@@ -332,10 +357,14 @@ class CLI:
         print()
         choice = input(Fore.YELLOW + "Enter a number to see details or 'B' to go back: ")
         
+        # return control to whichever profile view method called it 
         if choice.upper() == 'B':
             return 
+        
         try:  
+            # convert index number to make sure we're accessing the right row
             index = int(choice) - 1
+            # validates that index falls within the bounds of the result set before attempting to access it
             if 0 <= index < len(results):
                 full = self.db.executeQuery(
                     """

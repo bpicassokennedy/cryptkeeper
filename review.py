@@ -1,4 +1,7 @@
-
+# Author: Bella Picasso-Kennedy 
+# Date: May 03, 2026
+# Purpose: Defines the Review class, a child class of UserMovieActivity that manages 
+#          a user's reviews in the PostgreSQL database.
 
 from user_movie_activity import UserMovieActivity
 
