@@ -29,7 +29,7 @@ class CLI:
             print("1. Login")
             print("2. Register")
             print("3. Quit")
-            print(Fore.RED + "===============" + Style.RESET_ALL)
+            print(Fore.RED + "===================" + Style.RESET_ALL)
             
             print()
             choice = input(Fore.YELLOW + 'Enter your choice: ')
