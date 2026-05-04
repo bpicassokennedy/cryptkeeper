@@ -1,7 +1,9 @@
+# -----------------------------------------------------------------------------------
 # Author: Bella Picasso-Kennedy 
 # Date: May 03, 2026
 # Purpose: Defines the DataCleaning class, which processes raw CSV data and inserts
 #          validated records into the PostgreSQL database.
+# -----------------------------------------------------------------------------------
 
 import pandas as pd # for data manipulation
 from database import Database 

@@ -1,6 +1,8 @@
+# --------------------------------------------------------------------
 # Author: Bella Picasso-Kennedy 
 # Date: May 03, 2026
 # Purpose: Initializes the database connection, and launches the CLI.
+# --------------------------------------------------------------------
 
 from database import Database 
 from CLI import CLI

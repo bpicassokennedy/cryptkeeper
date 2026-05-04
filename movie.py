@@ -1,7 +1,9 @@
+# -------------------------------------------------------------------------------------------------
 # Author: Bella Picasso-Kennedy 
 # Date: May 03, 2026
 # Purpose: Defines the Movie class, which models a movie record and provides a method for querying
 #          movie data from the PostgreSQL database.
+# -------------------------------------------------------------------------------------------------
 
 class Movie:
     def __init__(self, db, movieID=None, title=None, originalTitle=None, overview=None, runtime=None, releaseDate=None, voteAverage=None, voteCount=None):

@@ -1,7 +1,9 @@
+# -----------------------------------------------------------------------------------
 # Author: Bella Picasso-Kennedy 
 # Date: May 03, 2026
 # Purpose: Defines the Database class, that establishes and manages the connection 
 #          to the horror_movies_db PostgreSQL database. 
+# -----------------------------------------------------------------------------------
 
 import psycopg
 

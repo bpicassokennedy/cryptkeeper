@@ -1,7 +1,9 @@
+# -----------------------------------------------------------------------------------
 # Author: Bella Picasso-Kennedy 
 # Date: May 03, 2026 
 # Purpose: Defines the User class, which handles user authentication, and 
 #          profile display, including registration ,login, and logout functionality.
+# -----------------------------------------------------------------------------------
 
 from colorama import * 
 

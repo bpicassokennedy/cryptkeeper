@@ -1,8 +1,10 @@
+# ----------------------------------------------------------------------------------------------
 # Author: Bella Picasso-Kennedy
 # Date: May 03, 2026 
 # Purpose: Defines the CLI class, which provides a command-line interface for users to interact 
 #          with the horror movie database, including searching, logging, and managing personal
 #          movie activity.
+# ----------------------------------------------------------------------------------------------
 
 from colorama import * # used for text color in terminal https://pypi.org/project/colorama/ 
 from user import User 

@@ -1,7 +1,9 @@
+# ---------------------------------------------------------------------------------------
 # Author: Bella Picasso-Kennedy 
 # Date: May 03, 2026
 # Purpose: Defines the WatchedLog class, a child class of UserMovieActivity that manages 
 #          a user's wathed movie log in the PostgreSQL database.
+# ---------------------------------------------------------------------------------------
 
 from user_movie_activity import UserMovieActivity 
 
