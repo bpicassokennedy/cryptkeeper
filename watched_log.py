@@ -14,12 +14,19 @@ class WatchedLog(UserMovieActivity):
         
     def add(self):
         self.db.executeUpdate(
-            "INSERT INTO watchedlog (username, movieID, dateWatched) VALUES (%s, %s, %s) ON CONFLICT DO NOTHING",
+            """
+            INSERT INTO watchedlog (username, movieID, dateWatched) 
+            VALUES (%s, %s, %s) 
+            ON CONFLICT DO NOTHING
+            """,
             (self.username, self.movieID, self.dateWatched)
         )
         
     def remove(self):
         self.db.executeUpdate(
-            "DELETE FROM watchedlog WHERE username = %s AND movieID = %s",
+            """
+            DELETE FROM watchedlog 
+            WHERE username = %s AND movieID = %s
+            """,
             (self.username, self.movieID)
         )

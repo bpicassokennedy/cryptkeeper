@@ -14,18 +14,19 @@ class Rating(UserMovieActivity):
         
     def add(self):
         self.db.executeUpdate(
-            "INSERT INTO rating (username, movieID, rating) VALUES (%s, %s, %s) ON CONFLICT DO NOTHING",
+            """
+            INSERT INTO rating (username, movieID, rating) 
+            VALUES (%s, %s, %s) 
+            ON CONFLICT (username, movieID) DO UPDATE SET rating = EXCLUDED.rating
+            """,
             (self.username, self.movieID, self.rating)
         )
         
     def remove(self):
         self.db.executeUpdate(
-            "DELETE FROM rating WHERE username = %s AND movieID = %s",
+            """
+            DELETE FROM rating 
+            WHERE username = %s AND movieID = %s
+            """,
             (self.username, self.movieID)
-        )
-    
-    def update(self):
-        self.db.executeUpdate(
-            "UPDATE rating SET rating = %s WHERE username = %s AND movieID = %s",
-            (self.rating, self.username, self.movieID)
         )

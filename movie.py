@@ -21,7 +21,11 @@ class Movie:
     def search(self, db, title):
         # referenced: https://www.postgresql.org/docs/7.3/functions-matching.html to make the search case insensitive
         results = db.executeQuery(
-            "SELECT * FROM movie WHERE title ILIKE %s",
+            """
+            SELECT * 
+            FROM movie 
+            WHERE title ILIKE %s
+            """,
             (f'%{title}%',)
         ) 
         if results:

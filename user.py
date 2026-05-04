@@ -15,7 +15,10 @@ class User:
         
     def register(self, username, password):
         existing = self.db.executeQuery(
-            "SELECT username FROM \"user\" WHERE username = %s",
+            """
+            SELECT username FROM \"user\" 
+            WHERE username = %s
+            """,
             (username,)
         )
         
@@ -27,7 +30,10 @@ class User:
         
         # username is free and can be added to the db
         self.db.executeUpdate(
-            "INSERT INTO \"user\" (username, password) VALUES (%s, %s)",
+            """
+            INSERT INTO \"user\" (username, password) 
+            VALUES (%s, %s)
+            """,
             (username, password)
         )
         
@@ -42,7 +48,9 @@ class User:
     def login(self, username, password):
         # needs a matching name and password
         result = self.db.executeQuery(
-            "SELECT username FROM \"user\" WHERE username = %s AND password = %s",
+            """SELECT username FROM \"user\" 
+            WHERE username = %s AND password = %s
+            """,
             (username, password)
         )
         

@@ -201,7 +201,7 @@ class CLI:
         # keep this running until the user decides to navigate back
         while True:
             print()
-            title = input("Enter a movie title: ")
+            title = input(Fore.YELLOW + "Enter a movie title: ")
             
             # instantiate a movie object 
             movie = Movie(self.db)

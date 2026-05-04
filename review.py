@@ -15,18 +15,19 @@ class Review(UserMovieActivity):
         
     def add(self):
         self.db.executeUpdate(
-            "INSERT INTO review (username, movieID, review, dateWritten) VALUES (%s, %s, %s, %s) ON CONFLICT DO NOTHING",
+            """
+            INSERT INTO review (username, movieID, review, dateWritten) 
+            VALUES (%s, %s, %s, %s) 
+            ON CONFLICT (username, movieID) DO UPDATE SET review = EXCLUDED.review, dateWritten = EXCLUDED.dateWritten
+            """,
             (self.username, self.movieID, self.review, self.dateWritten)
         )
         
     def remove(self):
         self.db.executeUpdate(
-            "DELETE FROM review WHERE username = %s AND movieID = %s",
+            """
+            DELETE FROM review 
+            WHERE username = %s AND movieID = %s"
+            """,
             (self.username, self.movieID)
-        )
-    
-    def update(self):
-        self.db.executeUpdate(
-            "UPDATE review SET review = %s, dateWritten = %s WHERE username = %s AND movieID = %s",
-            (self.review, self.dateWritten, self.username, self.movieID)
         )
