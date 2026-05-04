@@ -2,23 +2,23 @@
 #### Bella Picasso-Kennedy 
 #### CS 457: Database Management Systems Final Project
 #### May 06, 2026
+---
+A command-line horror movie tracking application inspired by *Letterboxd*, built with Python and PostgreSQL!
 
 ---
 
 ## Features 
-A command-line horror movie tracking application inspired by *Letterboxd*, built with Python and PostgreSQL!
-
 - User registration and login 
 - Search horror movies by title 
 - Add movies to a personal watchlist 
 - Log watched movies with a date 
 - Write and update reviews 
-- Rate movies
+- Rate movies out of 10 
 
 ---
 
 ## Data 
-Horror movie data was sourced from [Kaggle Horror Movie Dataset](https://www.kaggle.com/datasets/evangower/horror-movies?resource=download) created by Evan Gower
+Horror movie data sourced from the [Kaggle Horror Movie Dataset](https://www.kaggle.com/datasets/evangower/horror-movies?resource=download) by Evan Gower.
 
 ---
 ## Setup 
@@ -37,13 +37,19 @@ pip install psycopg pandas colorama
 - `colorama` - handles terminal text styling  
 
 **3) Create the database**
-```bash 
+
+Open the PostgreSQL terminal: 
+```bash
 psql -U postgres 
+```
+
+Then create the database:
+```sql
 CREATE DATABASE horror_movies_db;
 ```
 
 **4) Create the tables**
-```bash 
+```sql 
 CREATE TABLE "user"( 
     username VARCHAR(255) PRIMARY KEY, 
     password VARCHAR(255)
@@ -99,28 +105,26 @@ CREATE TABLE rating(
 
 **5) Populate the database**
 
-Run once before launching the application to clean and load the movie dataset into the database
+Run once before launching the application to clean and load the movie dataset into the database:
 ```bash
 python3 data_cleaning.py
 ```
 
 **6) Ensure database was populated correctly** 
-```bash 
-# how many rows were populated into the db
-SELECT COUNT(*)
-FROM movie
 
-# first 20 titles from the db 
+Once setup is complete, run the following commands in psql to confirm the tables and data are in place: 
+```sql 
+SELECT COUNT(*)
+FROM movie;
+
 SELECT title
 FROM movie 
 LIMIT 20;
 
-# release date should match the first 20 titles
 SELECT releaseDate
 FROM movie
 LIMIT 20;
 
-# overview should match the first 20 titles as well ^ 
 SELECT overview
 FROM movie
 LIMIT 20;
